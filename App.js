@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {
   Platform, StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Keyboard,
@@ -14,6 +13,12 @@ export default function App() {
     setTask(null);
     Keyboard.dismiss();
   };
+
+  const completeTask = (index) => {
+    const itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  };
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <View style={styles.container}>
@@ -21,8 +26,13 @@ export default function App() {
         <Text style={styles.sectionTitle}>section title</Text>
         <View style={styles.items}>
           {
-            taskItems.map((item, index)=>(
-              <Task key={index} text={item} />
+            taskItems.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => completeTask(index)}
+              >
+                <Task text={item} />
+              </TouchableOpacity>
             ))
           }
         </View>
